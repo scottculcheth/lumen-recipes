@@ -6,11 +6,11 @@
 
 $router->group( ['prefix' => 'recipes'], function () use ($router) {
 
-	$router->get('', function () { return "Get Many Recipes"; } );
-	$router->get('{id}', function ($id) { return "Get One Recipe $id"; } );
-	$router->post('', function () { return "Add New Recipe"; } );
-	$router->put('{id}', function ($id) { return "Update Recipe $id"; } );
+	$router->get  ('', 	   [ 'uses' => 'RecipeController@index'  ] );
+	$router->get  ('{id}', [ 'uses' => 'RecipeController@show'   ] );
+	$router->post ('', 	   [ 'uses' => 'RecipeController@store'  ] );
+	$router->put  ('{id}', [ 'uses' => 'RecipeController@update' ] );
 
-	$router->post('{id}/rate', function ($id) { return "Add Recipe Rating"; } );
+	$router->post('{id}/rate', [ 'uses' => 'RecipeController@rate' ] );
 
 });
