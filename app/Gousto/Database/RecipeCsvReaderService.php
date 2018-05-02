@@ -5,7 +5,13 @@ namespace App\Gousto\Database;
 use League\Csv\Reader;
 use League\Csv\Statement;
 
-class RecipeReaderService
+/*
+ This is where I am putting all of the interaction code for the CSV.
+ If this were a database instead, this would be replaced with a data access layer 
+ (maybe a set of eloquent models, maybe query builder)
+ */
+
+class RecipeCsvReaderService
 {
 	
 	protected $csv;
@@ -34,11 +40,13 @@ class RecipeReaderService
 				return $record['id'] == $id;
 			}
 		 );
-		return $stmt->process($this->csv);
+		return $stmt->process($this->csv)->fetchOne(0);
 	}
 
 	public function getRecipesByCuisine( $cuisine )
 	{
+		if( !$cuisine ) return $this->getAllRecipes();
+
 		$stmt = (new Statement())->where( 
 			function (array $record) use ($cuisine)
 			{

@@ -8,40 +8,24 @@ use Illuminate\Http\Request;
 class RecipeController extends Controller
 {
 
-    protected $rr;
+    protected $recipeRepository;
 
     public function __construct(RecipeRepository $rr)
     {
-        $this->rr = $rr;
+        $this->recipeRepository = $rr;
     }
 
     public function show($id)
     {
-        $data = $this->rr->getRecipeById($id);
-        foreach( $data as $offset => $recipe )
-        {
-            dd($recipe);
-        }
-
-        return json_encode( ['recipe_id' => $id] );
+        $recipe = $this->recipeRepository->getRecipeById($id);
+        return response()->json( $recipe );
     }
 
     public function index(Request $request) 
     {
-        // get paginated list of recipes by cuisine
-        // return JSON
-
         $cuisine = $request->input('cuisine');
-
-        $data = $this->rr->getRecipesByCuisine($cuisine);
-
-        foreach( $data as $offset => $recipe )
-        {
-            var_dump($recipe);
-        }
-        dd("done");
-
-        return json_encode( $this->rr->getAllRecipes() );
+        $recipes = $this->recipeRepository->getRecipesByCuisine($cuisine);
+        return response()->json( $recipes );
     }
 
     public function store()
