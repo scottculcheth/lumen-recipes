@@ -6,33 +6,36 @@ use League\Csv\Reader;
 use League\Csv\Statement;
 
 /*
- This is where I am putting all of the interaction code for the CSV.
+ This is where I am putting all of the read interaction code for the CSV.
  If this were a database instead, this would be replaced with a data access layer 
  (maybe a set of eloquent models, maybe query builder)
+
+ Made use of the PHPLeague CSV library for ease of data access.
+ Details at: csv.thephpleague.com
  */
 
-class RecipeCsvReaderService
+class RecipeCsvReaderService implements RecipeReaderInterface
 {
 	
-	protected $csv;
+	protected $reader;
 
 	public function __construct( )
 	{
-		$this->loadCsvData();
+		$this->openConnection();
 	}
 
-	public function loadCsvData()
+	protected function openConnection()
 	{
-		$this->csv = Reader::createFromPath( '/opt/gousto/database/csv/recipe-data.csv', 'r' );
-		$this->csv->setHeaderOffset(0);
+		$this->reader = Reader::createFromPath( env('CSV_DIR').env('CSV_FILE_RECIPE'), 'r' );
+		$this->reader->setHeaderOffset(0);
 	}
 
 	public function getAllRecipes()
 	{
-		return $this->csv->getRecords();
+		return $this->reader->getRecords();
 	}
 
-	public function getRecipeById( $id )
+	public function getRecipeById($id)
 	{
 		$stmt = (new Statement())->where( 
 			function (array $record) use ($id)
@@ -40,7 +43,7 @@ class RecipeCsvReaderService
 				return $record['id'] == $id;
 			}
 		 );
-		return $stmt->process($this->csv)->fetchOne(0);
+		return $stmt->process($this->reader)->fetchOne(0);
 	}
 
 	public function getRecipesByCuisine( $cuisine )
@@ -53,7 +56,12 @@ class RecipeCsvReaderService
 				return $record['recipe_cuisine'] == $cuisine;
 			}
 		 );
-		return $stmt->process($this->csv);
+		return $stmt->process($this->reader);
 	}
+
+	public function getAllRecipesExceptOne($id)
+    {
+
+    }
 
 }

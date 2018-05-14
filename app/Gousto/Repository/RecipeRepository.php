@@ -2,36 +2,25 @@
 
 namespace App\Gousto\Repository;
 
-use App\Gousto\Database\RecipeCsvReaderService;
-use App\Gousto\Model\RecipeFull;
+use App\Gousto\Database\RecipeReaderInterface;
 
 class RecipeRepository
 {
 	protected $db;
 
-	public function __construct(RecipeCsvReaderService $db) 
+	public function __construct(RecipeReaderInterface $db)
 	{
 		$this->db = $db;
 	}
 
 	public function getRecipeById($id)
 	{
-		$record = $this->db->getRecipeById($id);
-        $recipe = RecipeFull::createFromArray($record);
-		return $recipe;
+		return $this->db->getRecipeById($id);
 	}
 
 	public function getRecipesByCuisine($cuisine)
 	{
-		$records = $this->db->getRecipesByCuisine($cuisine);
-		$recipes = [];
-
-        foreach( $records as $offset => $record )
-        {
-            $recipes[] = RecipeFull::createFromArray($record);
-        }
-
-		return $recipes;
+		return $this->db->getRecipesByCuisine($cuisine);
 	}
 
 }
