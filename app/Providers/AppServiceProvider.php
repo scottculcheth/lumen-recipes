@@ -14,8 +14,18 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Gousto\Database\RecipeReaderInterface',
-            'App\Gousto\Database\RecipeCsvReaderService'
+            'App\Gousto\Database\Contract\RecipeSelectInterface',
+            'App\Gousto\Database\RecipeCsvSelectService'
+        );
+
+        $this->app->bind(
+            'App\Gousto\Database\Contract\RecipeInsertInterface',
+            'App\Gousto\Database\RecipeCsvInsertService'
+        );
+
+        $this->app->bind(
+            'App\Gousto\Database\Contract\RatingInsertInterface',
+            'App\Gousto\Database\RatingCsvInsertService'
         );
     }
 }
