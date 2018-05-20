@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Gousto\Repository\RecipeRepository;
+use App\Gousto\Logic\RecipeRepository;
 use Illuminate\Http\Request;
 
 class RecipeController extends Controller

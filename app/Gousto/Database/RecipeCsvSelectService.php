@@ -2,6 +2,7 @@
 
 namespace App\Gousto\Database;
 
+use App\Gousto\Database\Contract\RecipeSelectInterface;
 use League\Csv\Reader;
 use League\Csv\Statement;
 

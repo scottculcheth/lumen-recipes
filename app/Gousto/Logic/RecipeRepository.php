@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Gousto\Repository;
+namespace App\Gousto\Logic;
 
-use App\Gousto\Database\RecipeReaderInterface;
+use App\Gousto\Database\Contract\RecipeSelectInterface;
 
 class RecipeRepository
 {
 	protected $db;
 
-	public function __construct(RecipeReaderInterface $db)
+	public function __construct(RecipeSelectInterface $db)
 	{
 		$this->db = $db;
 	}

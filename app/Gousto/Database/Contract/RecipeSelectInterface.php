@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Gousto\Database;
+namespace App\Gousto\Database\Contract;
 
 
 interface RecipeSelectInterface
