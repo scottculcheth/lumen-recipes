@@ -24,8 +24,14 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            'App\Gousto\Database\Contract\RecipeUpdateInterface',
+            'App\Gousto\Database\RecipeCsvUpdateService'
+        );
+
+        $this->app->bind(
             'App\Gousto\Database\Contract\RatingInsertInterface',
             'App\Gousto\Database\RatingCsvInsertService'
         );
+
     }
 }

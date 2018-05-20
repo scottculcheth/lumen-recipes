@@ -4,19 +4,27 @@ namespace App\Gousto\Logic;
 
 
 use App\Gousto\Database\Contract\RecipeInsertInterface;
+use App\Gousto\Database\Contract\RecipeUpdateInterface;
 
 class RecipeAggregate
 {
-    protected $db;
+    protected $insertdb;
+    protected $updatedb;
 
-    public function __construct(RecipeInsertInterface $db )
+    public function __construct(RecipeInsertInterface $insertdb, RecipeUpdateInterface $updatedb)
     {
-        $this->db = $db;
+        $this->insertdb = $insertdb;
+        $this->updatedb = $updatedb;
     }
 
     public function insertRecipe( $recipe )
     {
-        $this->db->insertRecipe($recipe);
+        $this->insertdb->insertRecipe($recipe);
+    }
+
+    public function updateRecipe( $recipe )
+    {
+        $this->updatedb->updateRecipe( $recipe );
     }
 
 

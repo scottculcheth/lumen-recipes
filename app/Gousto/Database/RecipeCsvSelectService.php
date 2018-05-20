@@ -31,6 +31,11 @@ class RecipeCsvSelectService implements RecipeSelectInterface
         $this->reader->setHeaderOffset(0);
     }
 
+    public function getHeaders()
+    {
+        return $this->reader->getHeader();
+    }
+
     public function getAllRecipes()
     {
         return $this->reader->getRecords();

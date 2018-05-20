@@ -7,4 +7,6 @@ interface RecipeSelectInterface
 {
     public function getRecipeById($id);
     public function getRecipesByCuisine($cuisine);
+    public function getHeaders();
+    public function getAllRecipes();
 }
