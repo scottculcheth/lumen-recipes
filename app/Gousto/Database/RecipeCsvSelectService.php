@@ -52,16 +52,21 @@ class RecipeCsvSelectService implements RecipeSelectInterface
         return $stmt->process($this->reader)->fetchOne(0);
     }
 
-    public function getRecipesByCuisine( $cuisine )
+    public function getRecipesByCuisine( $cuisine, $page )
     {
         if( !$cuisine ) return $this->getAllRecipes();
 
+        $limit = 5; // This could also be coded to be either configurable, or user defined
+
         $stmt = (new Statement())->where(
-            function (array $record) use ($cuisine)
-            {
-                return $record['recipe_cuisine'] == $cuisine;
-            }
-        );
+                function (array $record) use ($cuisine)
+                {
+                    return $record['recipe_cuisine'] == $cuisine;
+                }
+            )
+            ->offset($limit * $page)
+            ->limit($limit)
+        ;
         return $stmt->process($this->reader);
     }
 

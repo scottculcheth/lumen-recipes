@@ -24,24 +24,25 @@ class RecipeController extends Controller
     public function index(Request $request) 
     {
         $cuisine = $request->input('cuisine');
-        $recipes = $this->recipeRepository->getRecipesByCuisine($cuisine);
+        $page = $request->input('page', 0);
+        $recipes = $this->recipeRepository->getRecipesByCuisine($cuisine, $page);
         return response()->json( $recipes );
     }
 
-    public function store()
+    public function store(Request $request)
     {
         // Create new recipe
         // Return id of new creation
     }
 
-    public function update($id)
+    public function update($id, Request $request)
     {
         // Update existing recipe
         // Return success / failure
     }
 
 // This method could be moved to its own controller, depending on the level of functionality required in future for ratings.
-    public function rate($id)
+    public function rate($id, $rating)
     {
         // Add rating
         // Return success / failure

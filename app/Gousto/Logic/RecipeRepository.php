@@ -4,6 +4,10 @@ namespace App\Gousto\Logic;
 
 use App\Gousto\Database\Contract\RecipeSelectInterface;
 
+// Not strictly useful here, however this aggregate layer allows for transformations should they be required later
+// For example, before returning the recipe, or set of recipes for mobile, the data may be filtered to return less
+// information as this cannot all be usefully displayed through the mobile app and would reduce the data transfer
+
 class RecipeRepository
 {
 	protected $db;
@@ -14,13 +18,17 @@ class RecipeRepository
 	}
 
 	public function getRecipeById($id)
-	{
-		return $this->db->getRecipeById($id);
+    {
+        $recipe = $this->db->getRecipeById($id);
+        // If required, can inject Transformer here to return in the appropriate format
+        // Frontend / Mobile edition of the data.
+		return $recipe;
 	}
 
-	public function getRecipesByCuisine($cuisine)
+	public function getRecipesByCuisine($cuisine, $page)
 	{
-		return $this->db->getRecipesByCuisine($cuisine);
+	    $recipes = $this->db->getRecipesByCuisine($cuisine, $page);
+		return $recipes;
 	}
 
 }
