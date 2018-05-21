@@ -18,14 +18,22 @@ class RecipeCsvInsertServiceTest extends TestCase
 
     public function testItAddsToCSV()
     {
+        $auto_keys = [
+            'id',
+            'created_at',
+            'updated_at',
+        ];
+
         $new_recipe = \App\Gousto\RecipeFaker::createFakeRecipe();
 
-        $this->writer->insertRecipe($new_recipe);
+        $id = $this->writer->insertRecipe($new_recipe);
 
-        $csv_recipe = $this->reader->getRecipeById( $new_recipe['id'] );
+        $csv_recipe = $this->reader->getRecipeById( $id );
 
         foreach(array_keys($csv_recipe) as $key){
-            $this->assertEquals( $new_recipe[$key], $csv_recipe[$key] );
+            if(!in_array($key, $auto_keys)) { // exclude auto-set keys
+                $this->assertEquals($new_recipe[$key], $csv_recipe[$key]);
+            }
         }
     }
 

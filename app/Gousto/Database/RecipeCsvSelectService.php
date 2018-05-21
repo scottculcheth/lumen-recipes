@@ -70,4 +70,10 @@ class RecipeCsvSelectService implements RecipeSelectInterface
         return $stmt->process($this->reader);
     }
 
+    public function getNextRecipeId()
+    {
+        return count($this->reader) + 1; // Auto-Increment Replacement
+        // Assumes starts a 1, no missing values and no deletions possible
+    }
+
 }

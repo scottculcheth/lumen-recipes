@@ -12,7 +12,7 @@ class RecipeFaker
         $faker = Faker::create();
 
         $recipe = [];
-        $recipe['id'] = $faker->randomNumber(3);
+        $recipe['id'] = 0;
         $recipe['created_at'] = $faker->date('Y-m-d H:i:s');
         $recipe['updated_at'] = $faker->date('Y-m-d H:i:s');
         $recipe['box_type'] = $faker->randomElement(['vegetarian', 'gourmet']);

@@ -12,7 +12,6 @@ class RatingFaker
         $faker = Faker::create();
 
         $rating = [];
-        $rating['id'] = $faker->randomNumber(3);
         $rating['recipe_id'] = $faker->randomNumber(3);
         $rating['user_id'] = $faker->randomNumber(3);
         $rating['rating'] = $faker->randomElement([1,2,3,4,5]);

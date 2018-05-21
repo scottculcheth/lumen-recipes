@@ -14,9 +14,16 @@ class RatingAggregate
         $this->db = $db;
     }
 
-    public function insertRating( $rating )
+    public function insertRating( $recipe_id, $rating )
     {
-        $this->db->insertRating($rating);
+        $rating_record = [];
+        $rating_record['recipe_id'] = $recipe_id;
+        $rating_record['rating'] = $rating;
+        $rating_record['user_id'] = 1; // This would be set by authorised user id in production system
+
+        // Validate Recipe exists
+
+        $this->db->insertRating($rating_record);
     }
 
 }

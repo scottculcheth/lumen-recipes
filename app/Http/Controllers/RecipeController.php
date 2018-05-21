@@ -2,49 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Gousto\Logic\RatingAggregate;
+use App\Gousto\Logic\RecipeAggregate;
 use App\Gousto\Logic\RecipeRepository;
 use Illuminate\Http\Request;
 
 class RecipeController extends Controller
 {
-
-    protected $recipeRepository;
-
-    public function __construct(RecipeRepository $rr)
+    public function show($id, RecipeRepository $recipeRepository)
     {
-        $this->recipeRepository = $rr;
+        $recipe = $recipeRepository->getRecipeById($id);
+        return response()->json(['recipe' => $recipe]);
     }
 
-    public function show($id)
-    {
-        $recipe = $this->recipeRepository->getRecipeById($id);
-        return response()->json( $recipe );
-    }
-
-    public function index(Request $request) 
+    public function index(Request $request, RecipeRepository $recipeRepository)
     {
         $cuisine = $request->input('cuisine');
         $page = $request->input('page', 0);
-        $recipes = $this->recipeRepository->getRecipesByCuisine($cuisine, $page);
-        return response()->json( $recipes );
+        $recipes = $recipeRepository->getRecipesByCuisine($cuisine, $page);
+        return response()->json(['recipe_data' => $recipes]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, RecipeAggregate $recipeAggregate)
     {
-        // Create new recipe
-        // Return id of new creation
+        $recipe = $request->input('recipe');
+        $id = $recipeAggregate->insertRecipe($recipe);
+        return response()->json(['recipe_id' => $id]);
     }
 
-    public function update($id, Request $request)
+    public function update($id, Request $request, RecipeAggregate $recipeAggregate)
     {
-        // Update existing recipe
-        // Return success / failure
+        $recipe = $request->input('recipe');
+        $recipe['id'] = $id; // this could be in the recipe object, but better to be explicit
+        $recipeAggregate->updateRecipe($recipe);
+        return response()->json(['recipe_id' => $id]);
     }
 
 // This method could be moved to its own controller, depending on the level of functionality required in future for ratings.
-    public function rate($id, $rating)
+    public function rate($id, $rating, RatingAggregate $ratingAggregate)
     {
-        // Add rating
-        // Return success / failure
+        $ratingAggregate->insertRating($id, $rating);
+        return response()->json(['recipe_id' => $id]);
     }
 }

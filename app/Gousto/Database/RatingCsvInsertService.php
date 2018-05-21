@@ -21,6 +21,10 @@ class RatingCsvInsertService implements RatingInsertInterface
 
     public function insertRating($rating)
     {
+        $now = date( "Y-m-d H:i:s" );
+        $rating['created_at'] = $now; // These would be set automatically by the SQL on production systems.
+        $rating['updated_at'] = $now;
+
         $this->writer->insertOne($rating);
     }
 }
