@@ -3,11 +3,13 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,9 +47,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        // return parent::render($request, $e);
+        $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+
+        if($e instanceof NotFoundHttpException)
+        {
+            $status = Response::HTTP_NOT_FOUND;
+        }
 
         // This would be expanded to deal with different systems errors
-        return response()->json( ['error'=>$e->getMessage()], 500);
+        return response()->json( ['error'=>$e->getMessage(), 'status'=>$status], $status);
     }
 }

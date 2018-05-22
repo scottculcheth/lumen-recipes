@@ -3,6 +3,7 @@
 namespace App\Gousto\Logic;
 
 use App\Gousto\Database\Contract\RecipeSelectInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 // Not strictly useful here, however this aggregate layer allows for transformations should they be required later
 // For example, before returning the recipe, or set of recipes for mobile, the data may be filtered to return less
@@ -20,6 +21,7 @@ class RecipeRepository
 	public function getRecipeById($id)
     {
         $recipe = $this->db->getRecipeById($id);
+        if(!$recipe) throw new NotFoundHttpException('Recipe with id '.$id. 'could not be found');
         // If required, can inject Transformer here to return in the appropriate format
         // Frontend / Mobile edition of the data.
 		return $recipe;

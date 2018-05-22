@@ -19,6 +19,8 @@ class RecipeCsvSelectService implements RecipeSelectInterface
 {
 
     protected $reader;
+    protected $limit = 5; // This could also be coded to be either configurable, or user defined
+
 
     public function __construct( )
     {
@@ -38,9 +40,19 @@ class RecipeCsvSelectService implements RecipeSelectInterface
 
     public function getAllRecipes()
     {
-        return $this->reader->getRecords();
+        $stmt = new Statement();
+        return $stmt->process($this->reader);
     }
 
+    public function getAllRecipesPaged($page)
+    {
+        $stmt = (new Statement())
+            ->offset($this->limit * $page)
+            ->limit($this->limit);
+        return $stmt->process($this->reader);
+    }
+
+    // Statement is the query language used by the CSV file reader.
     public function getRecipeById($id)
     {
         $stmt = (new Statement())->where(
@@ -54,9 +66,7 @@ class RecipeCsvSelectService implements RecipeSelectInterface
 
     public function getRecipesByCuisine( $cuisine, $page )
     {
-        if( !$cuisine ) return $this->getAllRecipes();
-
-        $limit = 5; // This could also be coded to be either configurable, or user defined
+        if( !$cuisine ) return $this->getAllRecipesPaged($page);
 
         $stmt = (new Statement())->where(
                 function (array $record) use ($cuisine)
@@ -64,8 +74,8 @@ class RecipeCsvSelectService implements RecipeSelectInterface
                     return $record['recipe_cuisine'] == $cuisine;
                 }
             )
-            ->offset($limit * $page)
-            ->limit($limit)
+            ->offset($this->limit * $page)
+            ->limit($this->limit)
         ;
         return $stmt->process($this->reader);
     }
