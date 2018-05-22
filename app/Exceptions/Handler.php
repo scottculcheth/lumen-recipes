@@ -48,6 +48,6 @@ class Handler extends ExceptionHandler
         // return parent::render($request, $e);
 
         // This would be expanded to deal with different systems errors
-        return response()->json( ['error'=>'An Unexpected Error Occurred'], 500);
+        return response()->json( ['error'=>$e->getMessage()], 500);
     }
 }

@@ -11,20 +11,20 @@ class RecipeValidator implements RecipeValidatorInterface
     public function validateRecipe($recipe)
     {
         $this->validateTitle($recipe['title']);
-        $this->validateCalories($recipe['calories']);
+        $this->validateCalories($recipe['calories_kcal']);
     }
 
     protected function validateTitle($title)
     {
         if(is_numeric($title)){
-            throw new BadRequestHttpException(); // Could implement full custom Exceptions here depending on req's
+            throw new BadRequestHttpException("Title was Incorrect"); // Could implement full custom Exceptions here depending on req's
         }
     }
 
     protected function validateCalories($calories)
     {
         if(!is_numeric($calories)){
-            throw new BadRequestHttpException();
+            throw new BadRequestHttpException( "Calories was Incorrect" );
         }
     }
 
