@@ -3,10 +3,13 @@ Installation
 This was built on using Laravel/Homestead as the virtual
 environment which is included as a dependency on the project.
 
-- Clone this repository into C:\code\projects\gousto
-- Ensure you have Vagrant and VirtualBox installed
-- Add gousto.test to your hosts file 192.168.10.10
-- Run Vagrant up
+* Clone this repository into C:\code\projects\gousto
+  * If you wish to put it somewhere else, edit your Homestead.yaml to reflect this
+* Ensure you have Vagrant, VirtualBox, PHP and Composer installed
+* Run composer install from command line
+* Add gousto.test to your hosts file 192.168.10.10
+* Run Vagrant up
+* Copy .env.example to .env
 
 API Endpoints
 =============
