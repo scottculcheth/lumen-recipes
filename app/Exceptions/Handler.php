@@ -45,6 +45,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        return parent::render($request, $e);
+        // return parent::render($request, $e);
+
+        // This would be expanded to deal with different systems errors
+        return response()->json( ['error'=>'An Unexpected Error Occurred'], 500);
     }
 }

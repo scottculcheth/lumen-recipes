@@ -33,6 +33,7 @@ class RecipeCsvUpdateService implements RecipeUpdateInterface
         $recipes = [];
         foreach ($recipe_records as $recipe) {
             $recipes[] = $recipe['id'] == $new_recipe['id'] ? $new_recipe : $recipe;
+            // if recipe to replace, take new, else take existing
         }
 
         $this->openConnection();
