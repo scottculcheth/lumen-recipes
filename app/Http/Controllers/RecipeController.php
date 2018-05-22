@@ -39,9 +39,9 @@ class RecipeController extends Controller
     }
 
 // This method could be moved to its own controller, depending on the level of functionality required in future for ratings.
-    public function rate($id, $rating, RatingAggregate $ratingAggregate)
+    public function rate($recipe_id, $rating, RatingAggregate $ratingAggregate)
     {
-        $ratingAggregate->insertRating($id, $rating);
-        return response()->json(['recipe_id' => $id]);
+        $ratingAggregate->insertRating($recipe_id, $rating);
+        return response()->json(['recipe_id' => $recipe_id]);
     }
 }

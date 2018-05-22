@@ -17,7 +17,7 @@ class RecipeValidatorTest extends TestCase
     {
         $recipe = [
           'title' => 'Title',
-          'calories' => 123,
+          'calories_kcal' => 123,
         ];
 
         $this->validator->validateRecipe($recipe);
@@ -29,7 +29,7 @@ class RecipeValidatorTest extends TestCase
     {
         $recipe = [
             'title' => 123,
-            'calories' => 123,
+            'calories_kcal' => 123,
         ];
 
         $this->expectException(\Symfony\Component\HttpKernel\Exception\BadRequestHttpException::class);
@@ -40,7 +40,7 @@ class RecipeValidatorTest extends TestCase
     {
         $recipe = [
             'title' => "Title",
-            'calories' => "Calories",
+            'calories_kcal' => "Calories",
         ];
 
         $this->expectException(\Symfony\Component\HttpKernel\Exception\BadRequestHttpException::class);
